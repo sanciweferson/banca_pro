@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BancaPRO — Central de Ajuda</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0b0d10;
+  --surface:#111418;
+  --card:#161b22;
+  --border:#21282f;
+  --border2:#2a3340;
+  --green:#00e676;
+  --red:#ff3d5a;
+  --amber:#ffb300;
+  --blue:#4fc3f7;
+  --purple:#ce93d8;
+  --orange:#ff9800;
+  --text:#e8edf3;
+  --muted:#5a6a7a;
+  --muted2:#8899aa;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --r:12px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  line-height:1.7;
+  min-height:100vh;
+}
+
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:999px}
+
+a{color:inherit}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:300;
+  background:rgba(17,20,24,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{
+  max-width:1180px;
+  margin:0 auto;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  letter-spacing:-.2px;
+}
+.logo-icon{
+  width:30px;height:30px;
+  border-radius:8px;
+  background:var(--green);
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+.logo span{color:var(--muted2);font-weight:400}
+.header-tag{
+  margin-left:auto;
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--green);
+  border:1px solid rgba(0,230,118,.24);
+  background:rgba(0,230,118,.08);
+  padding:4px 10px;
+  border-radius:999px;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:30px 20px 90px;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:16px;
+  margin-bottom:22px;
+}
+.hero-main,.hero-side{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+}
+.hero-main{padding:28px}
+.hero-side{padding:22px}
+.eyebrow{
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.hero h1{
+  font-size:clamp(28px,5vw,46px);
+  line-height:1.04;
+  margin-bottom:12px;
+}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero p{
+  color:var(--muted2);
+  font-size:15px;
+  max-width:760px;
+}
+.hero-list{
+  display:grid;
+  gap:10px;
+}
+.hero-chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 14px;
+  font-size:13px;
+  color:var(--muted2);
+}
+.hero-chip strong{display:block;color:var(--text);margin-bottom:2px}
+
+.search-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:22px;
+}
+.search-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+.search-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.search-input{
+  flex:1;
+  min-width:240px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  font-size:14px;
+  padding:12px 14px;
+  outline:none;
+}
+.search-input:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(0,230,118,.08);
+}
+.search-btn,.clear-btn,.top-btn{
+  border:none;
+  cursor:pointer;
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-size:11px;
+  border-radius:10px;
+  padding:11px 14px;
+  transition:.2s;
+}
+.search-btn{
+  background:var(--green);
+  color:#000;
+}
+.search-btn:hover{background:#00ff94}
+.clear-btn{
+  background:transparent;
+  border:1px solid var(--border2);
+  color:var(--text);
+}
+.clear-btn:hover{border-color:var(--text)}
+.search-result{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--muted2);
+}
+mark{
+  background:rgba(255,179,0,.18);
+  color:#fff;
+  padding:0 2px;
+  border-radius:3px;
+}
+
+.quick{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:24px;
+}
+.quick-title{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.quick-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.quick-link{
+  display:block;
+  text-decoration:none;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  transition:.2s;
+}
+.quick-link:hover{
+  border-color:var(--border2);
+  transform:translateY(-1px);
+}
+.quick-link strong{
+  display:block;
+  color:var(--text);
+  margin-bottom:4px;
+  font-size:14px;
+}
+.quick-link span{
+  color:var(--muted2);
+  font-size:12px;
+}
+
+.section{
+  margin-bottom:24px;
+  scroll-margin-top:92px;
+}
+.section-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+}
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+}
+.section-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  color:var(--green);
+  background:rgba(0,230,118,.08);
+  border:1px solid rgba(0,230,118,.18);
+  padding:4px 10px;
+  border-radius:999px;
+}
+.section-icon{font-size:20px}
+.section-title{font-size:22px;font-weight:800}
+.section-sub{
+  color:var(--muted2);
+  margin-bottom:16px;
+  font-size:14px;
+}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+}
+.card h3{
+  font-size:15px;
+  margin-bottom:8px;
+}
+.card p{
+  color:var(--muted2);
+  font-size:13px;
+}
+.card strong{color:var(--text)}
+
+.steps{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.step{
+  display:flex;
+  gap:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:15px 16px;
+}
+.step-num{
+  width:30px;height:30px;
+  flex-shrink:0;
+  background:var(--green);
+  color:#000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:13px;
+}
+.step h4{
+  font-size:15px;
+  margin-bottom:4px;
+}
+.step p{
+  font-size:13px;
+  color:var(--muted2);
+}
+.step .mini{
+  margin-top:6px;
+  color:var(--amber);
+  font-size:12px;
+}
+
+.help-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.help-item{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:16px;
+  align-items:start;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+}
+.help-key{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  color:var(--green);
+  background:rgba(0,230,118,.06);
+  border:1px solid rgba(0,230,118,.15);
+  padding:7px 10px;
+  border-radius:8px;
+}
+.help-value{
+  font-size:13px;
+  color:var(--muted2);
+}
+.help-value strong{color:var(--text)}
+
+.formula{
+  background:#0f1317;
+  border:1px solid var(--border);
+  border-left:3px solid var(--green);
+  border-radius:0 12px 12px 0;
+  padding:14px 16px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  color:var(--green);
+  margin:12px 0;
+}
+.formula span{color:var(--muted2)}
+
+.note,.warn,.info,.ok{
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:13px;
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
+.note{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  color:var(--muted2);
+}
+.warn{
+  background:rgba(255,179,0,.07);
+  border:1px solid rgba(255,179,0,.22);
+  color:var(--amber);
+}
+.info{
+  background:rgba(79,195,247,.07);
+  border:1px solid rgba(79,195,247,.22);
+  color:var(--blue);
+}
+.ok{
+  background:rgba(0,230,118,.07);
+  border:1px solid rgba(0,230,118,.22);
+  color:var(--green);
+}
+
+.results{
+  display:grid;
+  gap:10px;
+}
+.result{
+  display:flex;
+  gap:12px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+}
+.badge{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  padding:4px 10px;
+  border-radius:999px;
+  align-self:flex-start;
+  white-space:nowrap;
+}
+.b-win{background:rgba(0,230,118,.12);color:var(--green)}
+.b-loss{background:rgba(255,61,90,.12);color:var(--red)}
+.b-halfwin{background:rgba(0,230,118,.08);color:var(--green);border:1px solid rgba(0,230,118,.22)}
+.b-halfloss{background:rgba(206,147,216,.12);color:var(--purple)}
+.b-void{background:rgba(90,106,122,.16);color:var(--muted2)}
+.b-pending{background:rgba(255,179,0,.12);color:var(--amber)}
+.result h4{font-size:14px;margin-bottom:4px}
+.result p{font-size:13px;color:var(--muted2)}
+
+.err-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.err-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+}
+.err-card h3{
+  font-size:15px;
+  margin-bottom:8px;
+  color:var(--text);
+}
+.err-card p{
+  font-size:13px;
+  color:var(--muted2);
+  margin-bottom:8px;
+}
+.err-card .fix{
+  color:var(--green);
+  font-size:12px;
+  font-weight:700;
+}
+
+.faq{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+details{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+}
+summary{
+  cursor:pointer;
+  font-weight:700;
+  list-style:none;
+  padding:16px;
+  position:relative;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:'+';
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted2);
+  font-size:18px;
+  transition:.2s;
+}
+details[open] summary::after{
+  content:'–';
+}
+.faq-body{
+  padding:0 16px 16px;
+  color:var(--muted2);
+  font-size:13px;
+  border-top:1px solid var(--border);
+}
+
+.kbd{
+  display:inline-block;
+  background:#0f1317;
+  border:1px solid var(--border2);
+  color:var(--text);
+  border-radius:6px;
+  padding:2px 8px;
+  font-size:12px;
+  font-family:'JetBrains Mono',monospace;
+}
+
+.footer-box{
+  margin-top:18px;
+  text-align:center;
+  color:var(--muted2);
+  font-size:13px;
+  padding:26px 16px;
+  border-top:1px solid var(--border);
+}
+.footer-box strong{color:var(--text)}
+
+.top-btn{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:400;
+  background:var(--green);
+  color:#000;
+  box-shadow:var(--shadow);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(10px);
+}
+.top-btn.show{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+.hidden-by-search{
+  display:none !important;
+}
+
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr}
+  .quick-grid{grid-template-columns:1fr 1fr}
+  .grid-3,.grid-4,.err-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .grid-2,.grid-3,.grid-4,.quick-grid,.err-grid{grid-template-columns:1fr}
+  .help-item{grid-template-columns:1fr}
+  .section-box{padding:18px}
+  .header-inner{padding:12px 16px}
+  .wrap{padding:22px 16px 90px}
+}
+a{
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+   <a href="index.html"> <div class="logo">
+      <div class="logo-icon">B</div>
+      <div>BANCA<span>PRO</span></div>
+    </div></a>
+    <div class="header-tag">Central de Ajuda</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero search-target">
+    <div class="hero-main">
+      <div class="eyebrow">manual rápido da plataforma</div>
+      <h1>Guia para usar o <em>BancaPRO</em> sem travar</h1>
+      <p>
+        Este guia foi pensado para quando o usuário não entender alguma função do sistema.
+        Aqui ele encontra <strong>o que preencher</strong>, <strong>o que cada botão faz</strong>,
+        <strong>os erros mais comuns</strong> e <strong>como resolver</strong>.
+      </p>
+    </div>
+    <div class="hero-side">
+      <div class="eyebrow">o que você encontra aqui</div>
+      <div class="hero-list">
+        <div class="hero-chip"><strong>Como começar</strong>configurar banca e units</div>
+        <div class="hero-chip"><strong>Como registrar</strong>entrada simples e acumulada</div>
+        <div class="hero-chip"><strong>Como resolver</strong>win, loss, half e void</div>
+        <div class="hero-chip"><strong>Erros comuns</strong>o que fazer quando algo não funciona</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="search-box">
+    <div class="search-head">buscar no guia</div>
+    <div class="search-row">
+      <input
+        id="guideSearch"
+        class="search-input"
+        type="text"
+        placeholder="Ex: banca, ROI, entrada simples, saldo, void..."
+      >
+      <button class="search-btn" onclick="searchGuide()">Buscar</button>
+      <button class="clear-btn" onclick="clearGuideSearch()">Limpar</button>
+    </div>
+    <div class="search-result" id="searchResult">
+      Digite uma palavra para achar rapidamente a parte do guia que você precisa.
+    </div>
+  </section>
+
+  <section class="quick search-target">
+    <div class="quick-title">atalhos de ajuda</div>
+    <div class="quick-grid">
+      <a class="quick-link" href="#inicio"><strong>Primeiro passo</strong><span>como configurar a banca</span></a>
+      <a class="quick-link" href="#simples"><strong>Entrada simples</strong><span>o que preencher</span></a>
+      <a class="quick-link" href="#acumulada"><strong>Acumulada</strong><span>como montar e registrar</span></a>
+      <a class="quick-link" href="#resolver"><strong>Resultados</strong><span>quando usar win, loss e void</span></a>
+      <a class="quick-link" href="#dashboard"><strong>Dashboard</strong><span>o que cada métrica significa</span></a>
+      <a class="quick-link" href="#units"><strong>Units e risco</strong><span>como ler o risco da banca</span></a>
+      <a class="quick-link" href="#erros"><strong>Erros comuns</strong><span>o que fazer em cada caso</span></a>
+      <a class="quick-link" href="#faq"><strong>Dúvidas rápidas</strong><span>respostas objetivas</span></a>
+    </div>
+  </section>
+
+  <section class="section search-target" id="inicio">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-icon">🚀</span>
+        <h2 class="section-title">Primeiro passo: configurar a banca</h2>
+      </div>
+
+      <p class="section-sub">
+        Antes de registrar qualquer entrada, o usuário precisa definir a banca.
+        Sem isso, o sistema não consegue calcular saldo, units, risco e várias métricas.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Abra a aba “Configurar”</h4>
+            <p>É nela que ficam a banca inicial, units, regras de risco e opções de backup.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Preencha a banca inicial</h4>
+            <p>Esse valor representa o dinheiro separado só para gestão da banca. Exemplo: <span class="kbd">500</span> significa banca de R$ 500,00.</p>
+            <div class="mini">Se esse valor for redefinido depois, a leitura do histórico pode mudar.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Defina a porcentagem de 1 unit</h4>
+            <p>O padrão mais comum é <strong>1%</strong>. Se a banca for R$ 500, então 1 unit = R$ 5.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ok">✅ Depois disso, o sistema já pode ser usado normalmente.</div>
+      <div class="warn">⚠️ Se o usuário tentar registrar entrada sem configurar a banca, o sistema deve avisar claramente que precisa configurar primeiro.</div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="simples">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-icon">📝</span>
+        <h2 class="section-title">Como registrar uma entrada simples</h2>
+      </div>
+
+      <p class="section-sub">
+        Essa é a função mais usada. O ideal é o usuário entender o que vai em cada campo sem precisar adivinhar.
+      </p>
+
+      <div class="help-list">
+        <div class="help-item">
+          <div class="help-key">Evento / Time</div>
+          <div class="help-value">É o nome da entrada. Exemplo: <strong>Flamengo vence</strong> ou <strong>Palmeiras x Santos — Over 2.5</strong>.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Categoria</div>
+          <div class="help-value">É o grupo da entrada. Exemplo: Futebol, Basquete, Tênis, E-Sports.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Mercado</div>
+          <div class="help-value">É o tipo da entrada. Exemplo: Resultado final, Ambas marcam, Over 2.5, Handicap.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Odd</div>
+          <div class="help-value">É a cotação usada para calcular o retorno potencial. Exemplo: <strong>1.80</strong>.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Valor (R$)</div>
+          <div class="help-value">É quanto está sendo arriscado em dinheiro. Exemplo: <strong>R$ 20</strong>.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Units</div>
+          <div class="help-value">É o risco transformado em unidades da banca. Exemplo: se 1 unit = R$ 5, então R$ 20 = <strong>4 units</strong>.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Observações</div>
+          <div class="help-value">Campo opcional para anotar análise, contexto, ideia da entrada e qualquer detalhe útil.</div>
+        </div>
+      </div>
+
+      <div class="formula">Retorno potencial = Stake × Odd <span>→ Ex: R$ 20 × 1.80 = R$ 36</span></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Exemplo prático</h3>
+          <p>
+            Evento: <strong>Flamengo vence</strong><br>
+            Odd: <strong>1.80</strong><br>
+            Valor: <strong>R$ 20</strong><br>
+            Retorno potencial: <strong>R$ 36</strong>
+          </p>
+        </div>
+        <div class="card">
+          <h3>O que acontece ao registrar</h3>
+          <p>
+            O valor da entrada sai do saldo na hora e a entrada fica como <strong>pendente</strong>.
+            O crédito só volta quando o resultado é resolvido.
+          </p>
+        </div>
+      </div>
+
+      <div class="warn">
+        ⚠️ Erros comuns:
+        <br>• esquecer de preencher o evento
+        <br>• usar odd menor que 1.01
+        <br>• deixar valor zerado
+        <br>• tentar registrar sem saldo suficiente
+      </div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="acumulada">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-icon">🎯</span>
+        <h2 class="section-title">Como registrar uma acumulada</h2>
+      </div>
+
+      <p class="section-sub">
+        Na acumulada, o usuário primeiro monta as seleções e só depois informa o valor total da entrada.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Adicione uma seleção por vez</h4>
+            <p>Preencha evento, odd, categoria e mercado de cada seleção e depois clique em adicionar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Monte pelo menos 2 seleções</h4>
+            <p>Com menos de duas, a acumulada não deve ser registrada.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Confira a odd total</h4>
+            <p>Ela é o produto das odds das seleções. Exemplo: 1.50 × 1.70 × 1.80.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <h4>Informe o valor final da entrada</h4>
+            <p>Depois disso, o sistema calcula o retorno potencial automaticamente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="formula">Odd total = odd1 × odd2 × odd3 ...</div>
+
+      <div class="info">
+        ℹ️ A acumulada só ganha quando todas as seleções válidas forem green.
+        Se uma perder, a acumulada perde. Se uma for void, a odd é recalculada sem ela.
+      </div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="resolver">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-icon">🏁</span>
+        <h2 class="section-title">Como resolver uma entrada</h2>
+      </div>
+
+      <p class="section-sub">
+        Depois que a entrada termina, o usuário precisa marcar o resultado correto no histórico.
+      </p>
+
+      <div class="results">
+        <div class="result">
+          <span class="badge b-win">Win</span>
+          <div>
+            <h4>Entrada ganha</h4>
+            <p>O sistema devolve o retorno completo da entrada para o saldo.</p>
+          </div>
+        </div>
+
+        <div class="result">
+          <span class="badge b-loss">Loss</span>
+          <div>
+            <h4>Entrada perdida</h4>
+            <p>Nada volta para o saldo. A perda já aconteceu quando o stake saiu no cadastro.</p>
+          </div>
+        </div>
+
+        <div class="result">
+          <span class="badge b-halfwin">½W</span>
+          <div>
+            <h4>Meio ganho</h4>
+            <p>O sistema devolve o stake + metade do lucro. Isso é útil em linhas asiáticas.</p>
+          </div>
+        </div>
+
+        <div class="result">
+          <span class="badge b-halfloss">½L</span>
+          <div>
+            <h4>Meia perda</h4>
+            <p>O sistema devolve metade do stake. A outra metade é considerada perda.</p>
+          </div>
+        </div>
+
+        <div class="result">
+          <span class="badge b-void">Void</span>
+          <div>
+            <h4>Entrada anulada</h4>
+            <p>O stake volta inteiro. Não conta como vitória nem como derrota real.</p>
+          </div>
+        </div>
+
+        <div class="result">
+          <span class="badge b-pending">Pendente</span>
+          <div>
+            <h4>Ainda não resolvida</h4>
+            <p>A entrada foi registrada, mas o resultado ainda não foi marcado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn">
+        ⚠️ Se o usuário marcar o resultado errado, o ideal é permitir correção ou exclusão com cuidado para não bagunçar o histórico.
+      </div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="termos">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-icon">📚</span>
+        <h2 class="section-title">Termos que aparecem no sistema</h2>
+      </div>
+
+      <div class="grid-4">
+        <div class="card"><h3>Saldo</h3><p>Quanto ainda está disponível na banca naquele momento.</p></div>
+        <div class="card"><h3>Stake</h3><p>O valor arriscado na entrada.</p></div>
+        <div class="card"><h3>Odd</h3><p>A cotação usada para calcular o retorno.</p></div>
+        <div class="card"><h3>Retorno</h3><p>Quanto volta se a entrada for green, incluindo o stake.</p></div>
+        <div class="card"><h3>P/L</h3><p>Lucro ou prejuízo de uma entrada específica.</p></div>
+        <div class="card"><h3>Units</h3><p>Medida de risco baseada no tamanho da banca.</p></div>
+        <div class="card"><h3>ROI</h3><p>Retorno sobre o total investido nas entradas resolvidas.</p></div>
+        <div class="card"><h3>Drawdown</h3><p>Maior recuo da banca depois de um topo.</p></div>
+      </div>
+
+      <div class="formula">P/L = Crédito recebido − Stake</div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="dashboard">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-icon">📊</span>
+        <h2 class="section-title">Como ler o dashboard</h2>
+      </div>
+
+      <div class="help-list">
+        <div class="help-item">
+          <div class="help-key">Saldo atual</div>
+          <div class="help-value">É quanto a banca tem agora, já considerando entradas pendentes descontadas.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Entradas</div>
+          <div class="help-value">Quantidade total registrada no sistema.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Win rate</div>
+          <div class="help-value">Percentual de acerto nas entradas resolvidas. Ajuda, mas não mostra lucro sozinho.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">ROI</div>
+          <div class="help-value">Mostra o retorno percentual sobre o total investido. É uma das métricas mais importantes.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Lucro / Prejuízo</div>
+          <div class="help-value">Quanto o usuário ganhou ou perdeu em dinheiro.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Total registrado</div>
+          <div class="help-value">Soma dos valores usados nas entradas resolvidas.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Em risco</div>
+          <div class="help-value">Soma dos valores das entradas que ainda estão pendentes.</div>
+        </div>
+        <div class="help-item">
+          <div class="help-key">Drawdown</div>
+          <div class="help-value">Mostra a pior queda da banca em relação ao último topo.</div>
+        </div>
+      </div>
+
+      <div class="info">
+        ℹ️ O usuário não deve olhar só o saldo. O ideal é acompanhar também <strong>ROI</strong>, <strong>P/L</strong>, <strong>drawdown</strong> e <strong>exposição em risco</strong>.
+      </div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="units">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <span class="section-icon">🛡️</span>
+        <h2 class="section-title">Units e gestão de risco</h2>
+      </div>
+
+      <p class="section-sub">
+        Aqui o usuário entende quanto está arriscando de verdade.
+      </p>
+
+      <div class="formula">1 unit = banca × (% configurada ÷ 100)</div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Exemplo</h3>
+          <p>
+            Banca = <strong>R$ 500</strong><br>
+            1 unit = <strong>1%</strong><br>
+            Então 1 unit = <strong>R$ 5</strong>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Leitura rápida</h3>
+          <p>
+            2 units = R$ 10<br>
+            3 units = R$ 15<br>
+            5 units = R$ 25
+          </p>
+        </div>
+      </div>
+
+      <div class="warn">
+        ⚠️ Se aparecer alerta vermelho de risco, significa que a entrada está grande demais em relação à banca.
+      </div>
+
+      <div class="ok">
+        ✅ O ideal é manter consistência nas entradas, em vez de aumentar por impulso.
+      </div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="backup">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <span class="section-icon">💾</span>
+        <h2 class="section-title">Exportar, importar e backup</h2>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Exportar CSV</h3>
+          <p>Gera um arquivo para abrir em Excel ou Google Sheets com o histórico das entradas.</p>
+        </div>
+        <div class="card">
+          <h3>Exportar JSON</h3>
+          <p>Cria um backup completo do sistema, incluindo histórico, saldo e configurações.</p>
+        </div>
+        <div class="card">
+          <h3>Importar JSON</h3>
+          <p>Restaura um backup salvo antes. Útil para trocar de navegador ou recuperar dados.</p>
+        </div>
+      </div>
+
+      <div class="info">
+        ℹ️ Se os dados estiverem salvos só no navegador, o usuário pode perder tudo ao limpar o armazenamento local. Por isso o backup é importante.
+      </div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="erros">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <span class="section-icon">⚠️</span>
+        <h2 class="section-title">Erros comuns do sistema e o que fazer</h2>
+      </div>
+
+      <div class="err-grid">
+        <div class="err-card">
+          <h3>Não consigo registrar entrada</h3>
+          <p>Normalmente falta preencher evento, odd válida, valor maior que zero ou a banca ainda não foi configurada.</p>
+          <div class="fix">Como resolver: confira evento, odd, stake, saldo e banca inicial.</div>
+        </div>
+
+        <div class="err-card">
+          <h3>Saldo insuficiente</h3>
+          <p>O valor da entrada é maior que o saldo disponível naquele momento.</p>
+          <div class="fix">Como resolver: reduzir o valor da entrada ou revisar a banca.</div>
+        </div>
+
+        <div class="err-card">
+          <h3>Não aparece retorno potencial</h3>
+          <p>Isso costuma acontecer quando odd ou valor estão vazios ou inválidos.</p>
+          <div class="fix">Como resolver: preencher odd maior que 1.01 e valor maior que zero.</div>
+        </div>
+
+        <div class="err-card">
+          <h3>Units não batem com o valor</h3>
+          <p>O cálculo depende da banca atual e da porcentagem configurada para 1 unit.</p>
+          <div class="fix">Como resolver: revisar a banca inicial e o percentual configurado para unit.</div>
+        </div>
+
+        <div class="err-card">
+          <h3>O saldo caiu quando registrei</h3>
+          <p>Isso não é erro. O sistema desconta o stake na hora do registro da entrada.</p>
+          <div class="fix">Como resolver: basta resolver a entrada depois para o crédito voltar conforme o resultado.</div>
+        </div>
+
+        <div class="err-card">
+          <h3>Excluí uma entrada e o histórico mudou</h3>
+          <p>Excluir entradas pode alterar saldo, métricas e evolução da banca.</p>
+          <div class="fix">Como resolver: usar exclusão com cuidado e manter backup dos dados.</div>
+        </div>
+
+        <div class="err-card">
+          <h3>Importei JSON e ficou estranho</h3>
+          <p>O arquivo pode estar incompleto, antigo ou corrompido.</p>
+          <div class="fix">Como resolver: importar somente backups válidos exportados pelo próprio sistema.</div>
+        </div>
+
+        <div class="err-card">
+          <h3>Não consigo registrar acumulada</h3>
+          <p>Geralmente faltam pelo menos 2 seleções ou o valor final da entrada.</p>
+          <div class="fix">Como resolver: adicionar 2 ou mais seleções e preencher o stake da acumulada.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section search-target" id="faq">
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <span class="section-icon">❓</span>
+        <h2 class="section-title">Dúvidas rápidas</h2>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>Por que o saldo caiu na hora que registrei uma entrada?</summary>
+          <div class="faq-body">
+            Porque o sistema já desconta o stake no momento do cadastro. Depois, quando o resultado é resolvido, o valor volta conforme o status marcado.
+          </div>
+        </details>
+
+        <details>
+          <summary>Qual a diferença entre valor e units?</summary>
+          <div class="faq-body">
+            Valor é em dinheiro. Units é uma forma de medir risco baseada no tamanho da banca.
+          </div>
+        </details>
+
+        <details>
+          <summary>Quando usar ½W e ½L?</summary>
+          <div class="faq-body">
+            Quando a regra da entrada resulta em meio ganho ou meia perda, geralmente em linhas asiáticas. Se não houver esse caso, use win, loss ou void.
+          </div>
+        </details>
+
+        <details>
+          <summary>O que significa void?</summary>
+          <div class="faq-body">
+            Significa que a entrada foi anulada. O stake volta integralmente.
+          </div>
+        </details>
+
+        <details>
+          <summary>Por que meu ROI não combina com meu win rate?</summary>
+          <div class="faq-body">
+            Porque win rate mede acerto, enquanto ROI mede retorno financeiro. Dá para acertar bastante e ainda ter ROI ruim dependendo das odds e do tamanho das entradas.
+          </div>
+        </details>
+
+        <details>
+          <summary>Posso editar uma entrada?</summary>
+          <div class="faq-body">
+            O ideal é editar só enquanto a entrada ainda estiver pendente. Depois de resolvida, editar pode distorcer histórico e métricas.
+          </div>
+        </details>
+
+        <details>
+          <summary>Como faço backup dos meus dados?</summary>
+          <div class="faq-body">
+            Use a opção de exportar JSON. Esse arquivo guarda o histórico completo e pode ser importado depois.
+          </div>
+        </details>
+      </div>
+
+      <div class="footer-box">
+        <strong>Resumo:</strong> configure a banca, registre a entrada, resolva o resultado e acompanhe o dashboard.
+        Este guia existe para o usuário não ficar perdido no meio do uso.
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<button id="topBtn" class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Topo ↑</button>
+
+<script>
+const searchInput = document.getElementById('guideSearch');
+const searchResult = document.getElementById('searchResult');
+const topBtn = document.getElementById('topBtn');
+const searchableSections = [...document.querySelectorAll('.search-target')];
+
+function removeMarks(node){
+  const marks = node.querySelectorAll('mark');
+  marks.forEach(mark=>{
+    const parent = mark.parentNode;
+    parent.replaceChild(document.createTextNode(mark.textContent), mark);
+    parent.normalize();
+  });
+}
+
+function highlightText(element, term){
+  if(!term) return 0;
+
+  let count = 0;
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+    acceptNode(node){
+      const parent = node.parentNode;
+      if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if(parent && ['SCRIPT','STYLE','MARK'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  const textNodes = [];
+  while(walker.nextNode()) textNodes.push(walker.currentNode);
+
+  textNodes.forEach(node=>{
+    const text = node.nodeValue;
+    const lower = text.toLowerCase();
+    const query = term.toLowerCase();
+
+    if(!lower.includes(query)) return;
+
+    const frag = document.createDocumentFragment();
+    let start = 0;
+    let index;
+
+    while((index = lower.indexOf(query, start)) !== -1){
+      if(index > start){
+        frag.appendChild(document.createTextNode(text.slice(start, index)));
+      }
+      const mark = document.createElement('mark');
+      mark.textContent = text.slice(index, index + query.length);
+      frag.appendChild(mark);
+      start = index + query.length;
+      count++;
+    }
+
+    if(start < text.length){
+      frag.appendChild(document.createDocumentFragment().appendChild(document.createTextNode(text.slice(start))) || document.createTextNode(text.slice(start)));
+    }
+
+    node.parentNode.replaceChild(frag, node);
+  });
+
+  return count;
+}
+
+function clearGuideSearch(){
+  searchInput.value = '';
+  searchableSections.forEach(section=>{
+    section.classList.remove('hidden-by-search');
+    removeMarks(section);
+  });
+  searchResult.textContent = 'Digite uma palavra para achar rapidamente a parte do guia que você precisa.';
+}
+
+function searchGuide(){
+  const term = searchInput.value.trim();
+
+  searchableSections.forEach(section=>{
+    removeMarks(section);
+    section.classList.remove('hidden-by-search');
+  });
+
+  if(!term){
+    searchResult.textContent = 'Digite uma palavra para achar rapidamente a parte do guia que você precisa.';
+    return;
+  }
+
+  let matchSections = 0;
+  let totalMarks = 0;
+  let firstMatch = null;
+
+  searchableSections.forEach(section=>{
+    const text = section.textContent.toLowerCase();
+    if(text.includes(term.toLowerCase())){
+      const marks = highlightText(section, term);
+      totalMarks += marks;
+      matchSections++;
+      if(!firstMatch) firstMatch = section;
+    }else{
+      section.classList.add('hidden-by-search');
+    }
+  });
+
+  if(matchSections === 0){
+    searchResult.textContent = `Nenhum resultado encontrado para "${term}".`;
+    return;
+  }
+
+  searchResult.textContent = `${matchSections} seção(ões) encontrada(s) com ${totalMarks} ocorrência(s) para "${term}".`;
+
+  if(firstMatch){
+    firstMatch.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+searchInput.addEventListener('keydown', e=>{
+  if(e.key === 'Enter') searchGuide();
+});
+
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > 260) topBtn.classList.add('show');
+  else topBtn.classList.remove('show');
+});
+</script>
+
+</body>
+</html>

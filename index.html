@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BancaPRO — Gestão de Banca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+   <a href="index.html"> <div class="logo">
+      <div class="logo-icon">B</div>
+      BANCA<span>PRO</span>
+    </div></a>
+    <div class="hstat">
+      <span class="lbl">Saldo</span>
+      <span class="val" id="hBal">R$ 0,00</span>
+    </div>
+  </header>
+
+  <nav>
+    <button class="nb active" onclick="goPage('dashboard',this)">Dashboard</button>
+    <button class="nb" onclick="goPage('simples',this)">Nova Entrada</button>
+    <button class="nb" onclick="goPage('acumulada',this)">Acumulada</button>
+    <button class="nb" onclick="goPage('apostas',this)">Histórico</button>
+    <button class="nb" onclick="goPage('relatorios',this)">Relatórios</button>
+    <button class="nb" onclick="goPage('config',this)">Configurar</button>
+ <a  href="guia.html">  <button  class="nb" >Guia</button></a>
+
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="page active">
+    <div class="container">
+      <div class="kpi-grid">
+        <div class="kpi cg"><div class="kpi-lbl">Saldo Atual</div><div class="kpi-val" id="kBal" style="color:var(--green)">R$ 0,00</div><div class="kpi-sub" id="kBalDiff">—</div></div>
+        <div class="kpi cb"><div class="kpi-lbl">Entradas</div><div class="kpi-val" id="kTotal" style="color:var(--blue)">0</div><div class="kpi-sub" id="kPend">0 pendentes</div></div>
+        <div class="kpi cg"><div class="kpi-lbl">Win Rate</div><div class="kpi-val" id="kWR">0%</div><div class="kpi-sub" id="kWRsub">0W — 0L</div></div>
+        <div class="kpi ca"><div class="kpi-lbl">ROI</div><div class="kpi-val" id="kROI">0%</div><div class="prog-wrap"><div class="prog-bar" id="roiBar" style="width:0%;background:var(--green)"></div></div></div>
+        <div class="kpi cp"><div class="kpi-lbl">Lucro / Prejuízo</div><div class="kpi-val" id="kProfit">R$ 0,00</div><div class="kpi-sub" id="kProfSub">—</div></div>
+        <div class="kpi cw"><div class="kpi-lbl">Total Registrado</div><div class="kpi-val" id="kStaked" style="color:var(--muted2)">R$ 0,00</div><div class="kpi-sub" id="kAvgOdd">odd média: —</div></div>
+      </div>
+
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi cg kpi-small"><div class="kpi-lbl">Sequência atual</div><div class="kpi-val kpi-val-sm" id="kStreak">—</div><div class="streak-dots" id="streakDots"></div></div>
+        <div class="kpi ca kpi-small"><div class="kpi-lbl">Melhor entrada</div><div class="kpi-val kpi-val-sm" id="kBest" style="color:var(--green)">—</div><div class="kpi-sub ellipsis" id="kBestName">—</div></div>
+        <div class="kpi cr kpi-small"><div class="kpi-lbl">Pior entrada</div><div class="kpi-val kpi-val-sm" id="kWorst" style="color:var(--red)">—</div><div class="kpi-sub ellipsis" id="kWorstName">—</div></div>
+        <div class="kpi cb kpi-small"><div class="kpi-lbl">Em risco</div><div class="kpi-val kpi-val-sm" id="kRisk" style="color:var(--blue)">R$ 0,00</div><div class="kpi-sub" id="kRiskSub">0 entradas</div></div>
+      </div>
+
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi cr kpi-small"><div class="kpi-lbl">Drawdown Máx.</div><div class="kpi-val kpi-val-sm" id="kDD" style="color:var(--red)">0%</div><div class="kpi-sub" id="kDDsub">—</div></div>
+        <div class="kpi cb kpi-small"><div class="kpi-lbl">Yield</div><div class="kpi-val kpi-val-sm" id="kYield" style="color:var(--blue)">0%</div><div class="kpi-sub" id="kYieldSub">—</div></div>
+        <div class="kpi cp kpi-small"><div class="kpi-lbl">Profit Factor</div><div class="kpi-val kpi-val-sm" id="kPF" style="color:var(--purple)">—</div><div class="kpi-sub" id="kPFSub">—</div></div>
+        <div class="kpi ca kpi-small"><div class="kpi-lbl">Stake Média</div><div class="kpi-val kpi-val-sm" id="kAvgStake" style="color:var(--amber)">—</div><div class="kpi-sub" id="kAvgStakeSub">—</div></div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-hdr">
+          <span class="chart-title">Evolução da banca</span>
+          <span class="chart-info" id="chartInfo"></span>
+        </div>
+        <canvas id="bankChart" height="150"></canvas>
+        <div id="chartEmpty" class="empty" style="display:none">
+          <div class="empty-icon">📈</div>
+          Resolva entradas para ver a evolução
+        </div>
+      </div>
+
+      <div class="fg c2">
+        <div class="card">
+          <div class="sec-title">Por categoria</div>
+          <div id="catBreakdown"><div class="empty empty-sm">Sem dados</div></div>
+        </div>
+        <div class="card">
+          <div class="sec-title">Últimas 5 entradas</div>
+          <div id="recentBets"><div class="empty empty-sm">Sem entradas</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOVA ENTRADA -->
+  <div id="page-simples" class="page">
+    <div class="container">
+      <div id="unitBarS" class="units-bar" style="display:none">
+        <strong id="unitValS">—</strong>
+        <span id="unitSubS">—</span>
+      </div>
+
+      <div class="card">
+        <div class="sec-title">Registrar entrada simples</div>
+        <div class="fg c3">
+          <div class="field cs3"><label>Evento / Time</label><input type="text" id="sEvent" placeholder="Ex: Flamengo vence o Palmeiras"></div>
+
+          <div class="field">
+            <label>Categoria</label>
+            <select id="sCat">
+              <option>⚽ Futebol</option>
+              <option>🏀 Basquete</option>
+              <option>🎾 Tênis</option>
+              <option>🏈 Futebol Americano</option>
+              <option>⚾ Beisebol</option>
+              <option>🏒 Hockey</option>
+              <option>🥊 MMA / Boxe</option>
+              <option>🎮 E-Sports</option>
+              <option>🎯 Outro</option>
+            </select>
+          </div>
+
+          <div class="field"><label>Mercado</label><input type="text" id="sMkt" placeholder="Resultado Final, Over 2.5..."></div>
+
+          <div class="field">
+            <label>Tipo</label>
+            <select id="sMode">
+              <option>Pré-evento</option>
+              <option>Ao vivo</option>
+            </select>
+          </div>
+
+          <div class="field"><label>Odd</label><input type="number" id="sOdd" placeholder="1.75" min="1.01" step="0.01" oninput="calcS()"></div>
+          <div class="field"><label>Valor (R$)</label><input type="number" id="sStake" placeholder="0.00" min="0.01" step="0.01" oninput="syncUnitsS();calcS()"><div class="hint" id="sHint"></div></div>
+          <div class="field"><label>Units</label><input type="number" id="sUnits" placeholder="1.0" min="0.1" step="0.1" oninput="unitsToStakeS()"><div class="hint">Preencha units OU valor</div></div>
+          <div class="field"><label>Retorno potencial</label><input type="text" id="sRet" readonly></div>
+          <div class="field"><label>Odd implícita</label><input type="text" id="sImplied" readonly class="amber"></div>
+
+          <div class="field">
+            <label>Confiança</label>
+            <select id="sConf">
+              <option>Baixa</option>
+              <option>Média</option>
+              <option>Alta</option>
+            </select>
+          </div>
+
+          <div class="field cs3"><label>Observações</label><textarea id="sNotes" placeholder="Análise, contexto, motivo..."></textarea></div>
+        </div>
+
+        <div class="warn-bar" id="riskPreviewSimple" style="display:none"></div>
+
+        <div class="btn-row">
+          <button class="btn bp" onclick="addSimple()">+ Registrar Entrada</button>
+          <button class="btn bo" onclick="clearS()">Limpar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACUMULADA -->
+  <div id="page-acumulada" class="page">
+    <div class="container">
+      <div id="unitBarA" class="units-bar" style="display:none">
+        <strong id="unitValA">—</strong>
+        <span id="unitSubA">—</span>
+      </div>
+
+      <div class="card mb">
+        <div class="sec-title">Adicionar seleção</div>
+        <div class="fg c3">
+          <div class="field cs2"><label>Evento / Time</label><input type="text" id="aLegEvent" placeholder="Ex: Palmeiras vence" onkeydown="if(event.key==='Enter')addLeg()"></div>
+          <div class="field"><label>Odd desta seleção</label><input type="number" id="aLegOdd" placeholder="1.70" min="1.01" step="0.01" onkeydown="if(event.key==='Enter')addLeg()"></div>
+
+          <div class="field">
+            <label>Categoria</label>
+            <select id="aLegCat">
+              <option>⚽ Futebol</option>
+              <option>🏀 Basquete</option>
+              <option>🎾 Tênis</option>
+              <option>🏈 Futebol Americano</option>
+              <option>⚾ Beisebol</option>
+              <option>🏒 Hockey</option>
+              <option>🥊 MMA / Boxe</option>
+              <option>🎮 E-Sports</option>
+              <option>🎯 Outro</option>
+            </select>
+          </div>
+
+          <div class="field cs2"><label>Mercado (opcional)</label><input type="text" id="aLegMkt" placeholder="Resultado final, gols..." onkeydown="if(event.key==='Enter')addLeg()"></div>
+        </div>
+        <div class="btn-row"><button class="btn bo bsm" onclick="addLeg()">+ Adicionar seleção</button></div>
+      </div>
+
+      <div class="card mb">
+        <div class="sec-title">Seleções <span id="legCountBadge" class="leg-count-badge"></span></div>
+        <div class="leg-builder" id="legBuilder"><div class="empty empty-sm"><div class="empty-icon">🎯</div>Adicione pelo menos 2 seleções</div></div>
+        <div class="acc-summary" id="accSummary" style="display:none">
+          <div class="acc-stat"><div class="lbl">Seleções</div><div class="val" id="aCount" style="color:var(--orange)">0</div></div>
+          <div class="acc-stat"><div class="lbl">Odd total</div><div class="val" id="aTotalOdd" style="color:var(--amber)">1.00</div></div>
+          <div class="acc-stat"><div class="lbl">Retorno pot.</div><div class="val" id="aRetShow" style="color:var(--green)">R$ 0,00</div></div>
+          <div class="acc-stat"><div class="lbl">Lucro pot.</div><div class="val" id="aProfShow" style="color:var(--green)">R$ 0,00</div></div>
+        </div>
+      </div>
+
+      <div class="card" id="aStakeCard" style="display:none">
+        <div class="sec-title">Valor da entrada</div>
+        <div class="fg c3">
+          <div class="field"><label>Valor (R$)</label><input type="number" id="aStake" placeholder="0.00" min="0.01" step="0.01" oninput="calcA();syncUnitsA()"><div class="hint" id="aHint"></div></div>
+          <div class="field"><label>Units</label><input type="number" id="aUnits" placeholder="1.0" min="0.1" step="0.1" oninput="unitsToStakeA()"><div class="hint">Preencha units OU valor</div></div>
+          <div class="field"><label>Retorno potencial</label><input type="text" id="aRet" readonly></div>
+          <div class="field cs3"><label>Observações</label><textarea id="aNotes" placeholder="Combinação de jogos, análise..."></textarea></div>
+        </div>
+
+        <div class="warn-bar" id="riskPreviewAcc" style="display:none"></div>
+
+        <div class="btn-row">
+          <button class="btn borg" onclick="registerAcc()">Registrar Acumulada</button>
+          <button class="btn bd" onclick="clearAcc()">Limpar tudo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div id="page-apostas" class="page">
+    <div class="container">
+      <div class="tbl-wrap">
+        <div class="tbl-top">
+          <div class="tbl-top-l">
+            <div class="tabs">
+              <button class="tab active" onclick="setF('all',this)">Todas</button>
+              <button class="tab" onclick="setF('pending',this)">Pendentes</button>
+              <button class="tab" onclick="setF('win',this)">Ganhas</button>
+              <button class="tab" onclick="setF('loss',this)">Perdidas</button>
+              <button class="tab" onclick="setF('acc',this)">Acumuladas</button>
+              <button class="tab" onclick="setF('void',this)">Void/½</button>
+            </div>
+
+            <input type="text" class="search-box" id="srch" placeholder="Buscar..." oninput="renderTbl()">
+
+            <select class="sort-sel" id="sortSel" onchange="renderTbl()">
+              <option value="newest">Mais recentes</option>
+              <option value="oldest">Mais antigas</option>
+              <option value="biggest">Maior stake</option>
+              <option value="best">Melhor P/L</option>
+              <option value="odd">Maior odd</option>
+            </select>
+
+            <select class="sort-sel" id="periodSel" onchange="renderTbl()">
+              <option value="all">Todo período</option>
+              <option value="today">Hoje</option>
+              <option value="7d">Últimos 7 dias</option>
+              <option value="30d">Últimos 30 dias</option>
+              <option value="month">Este mês</option>
+            </select>
+          </div>
+
+          <div class="action-group">
+            <button class="btn bo bsm" onclick="expCSV()">⬇ CSV</button>
+            <button class="btn bo bsm" onclick="expJSON()">⬇ JSON</button>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Evento</th>
+                <th>Odd</th>
+                <th>Valor</th>
+                <th>Retorno</th>
+                <th>Units</th>
+                <th>Status</th>
+                <th>P/L</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="betsTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="pag">
+          <span id="pagInfo">0 entradas</span>
+          <div class="pag-btns" id="pagBtns"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATÓRIOS -->
+  <div id="page-relatorios" class="page">
+    <div class="container">
+      <div class="card mb">
+        <div class="sec-title">Resumo do período</div>
+        <div class="report-grid">
+          <div class="report-box"><div class="lbl">Hoje</div><div class="val" id="rToday">—</div></div>
+          <div class="report-box"><div class="lbl">Últimos 7 dias</div><div class="val" id="r7">—</div></div>
+          <div class="report-box"><div class="lbl">Últimos 30 dias</div><div class="val" id="r30">—</div></div>
+          <div class="report-box"><div class="lbl">Este mês</div><div class="val" id="rMonth">—</div></div>
+          <div class="report-box"><div class="lbl">Stop diário usado</div><div class="val" id="rDailyStop">—</div></div>
+          <div class="report-box"><div class="lbl">Stop semanal usado</div><div class="val" id="rWeeklyStop">—</div></div>
+        </div>
+      </div>
+
+      <div class="fg c2">
+        <div class="card">
+          <div class="sec-title">Lucro por mês</div>
+          <div id="monthlyReport" class="list-lines"><div class="empty empty-sm">Sem dados</div></div>
+        </div>
+        <div class="card">
+          <div class="sec-title">Lucro por categoria</div>
+          <div id="categoryReport" class="list-lines"><div class="empty empty-sm">Sem dados</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIG -->
+  <div id="page-config" class="page">
+    <div class="container">
+      <div class="fg c2 mb">
+        <div class="card">
+          <div class="sec-title">Banca inicial</div>
+          <div class="field mb"><label>Valor (R$)</label><input type="number" id="cfgBal" placeholder="500.00" min="1" step="0.01"></div>
+          <div class="hint mb">⚠️ Reinicia o histórico de saldo</div>
+          <button class="btn bp" onclick="setBal()">Definir banca</button>
+        </div>
+
+        <div class="card">
+          <div class="sec-title">Units</div>
+          <div class="field mb">
+            <label>1 unit = X% da banca</label>
+            <input type="number" id="cfgUnit" placeholder="1" min="0.1" max="10" step="0.1" oninput="updUnitHint()">
+            <div class="hint" id="unitHint">Padrão: 1% por unit</div>
+          </div>
+          <button class="btn bp" onclick="saveUnit()">Salvar</button>
+        </div>
+      </div>
+
+      <div class="card mb">
+        <div class="sec-title">Gestão de risco</div>
+        <div class="fg c4">
+          <div class="field"><label>Máx. por entrada (%)</label><input type="number" id="cfgRiskPct" min="0.1" step="0.1" oninput="updRiskHint()"></div>
+          <div class="field"><label>Máx. por entrada (units)</label><input type="number" id="cfgRiskUnits" min="0.1" step="0.1" oninput="updRiskHint()"></div>
+          <div class="field"><label>Stop diário (%)</label><input type="number" id="cfgDailyLoss" min="0.1" step="0.1" oninput="updRiskHint()"></div>
+          <div class="field"><label>Stop semanal (%)</label><input type="number" id="cfgWeeklyLoss" min="0.1" step="0.1" oninput="updRiskHint()"></div>
+        </div>
+        <div class="warn-bar" id="riskHint">—</div>
+        <div class="btn-row"><button class="btn bp" onclick="saveRisk()">Salvar regras de risco</button></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-title">Dados</div>
+        <div class="data-text">Exporte, importe ou limpe seus dados. JSON = backup completo e recuperável.</div>
+        <div class="action-group wrap">
+          <button class="btn bo" onclick="expCSV()">⬇ CSV</button>
+          <button class="btn bo" onclick="expJSON()">⬇ JSON</button>
+          <button class="btn bo" onclick="impJSON()">⬆ Importar JSON</button>
+          <input type="file" id="impFile" accept=".json" class="hidden" onchange="doImp(event)">
+        </div>
+        <div class="danger-top">
+          <button class="btn bd" onclick="askReset()">🗑 Apagar todos os dados</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EDITAR -->
+  <div class="overlay" id="editOv">
+    <div class="modal">
+      <div class="modal-title">Editar Entrada<button class="modal-close" onclick="closeEdit()">×</button></div>
+      <div class="fg c2">
+        <div class="field cs2"><label>Evento</label><input type="text" id="eEv"></div>
+        <div class="field"><label>Odd</label><input type="number" id="eOdd" min="1.01" step="0.01"></div>
+        <div class="field"><label>Valor (R$)</label><input type="number" id="eStk" min="0.01" step="0.01"></div>
+
+        <div class="field">
+          <label>Categoria</label>
+          <select id="eCat">
+            <option>⚽ Futebol</option>
+            <option>🏀 Basquete</option>
+            <option>🎾 Tênis</option>
+            <option>🏈 Futebol Americano</option>
+            <option>⚾ Beisebol</option>
+            <option>🏒 Hockey</option>
+            <option>🥊 MMA / Boxe</option>
+            <option>🎮 E-Sports</option>
+            <option>🎯 Outro</option>
+          </select>
+        </div>
+
+        <div class="field"><label>Mercado</label><input type="text" id="eMkt"></div>
+
+        <div class="field">
+          <label>Modo</label>
+          <select id="eMode">
+            <option>Pré-evento</option>
+            <option>Ao vivo</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Confiança</label>
+          <select id="eConf">
+            <option>Baixa</option>
+            <option>Média</option>
+            <option>Alta</option>
+          </select>
+        </div>
+
+        <div class="field cs2"><label>Observações</label><textarea id="eNotes"></textarea></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn bp" onclick="saveEdit()">Salvar</button>
+        <button class="btn bo" onclick="closeEdit()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL RESOLVER ACUMULADA -->
+  <div class="overlay" id="resolveAccOv">
+    <div class="modal modal-md">
+      <div class="modal-title">Resolver Acumulada<button class="modal-close" onclick="closeResolveAcc()">×</button></div>
+      <div class="modal-subtitle">Marque cada seleção. Acumulada ganha somente se todas ganharem. Legs void deduzem a odd automaticamente.</div>
+      <div id="resolveLegsWrap"></div>
+      <div class="result-preview">
+        <div class="lbl">Resultado da acumulada</div>
+        <div id="accResultPreview" class="result-preview-text">Resolva todas as seleções para ver o resultado</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn borg" id="confirmAccBtn" onclick="confirmResolveAcc()" disabled>Confirmar resultado</button>
+        <button class="btn bo" onclick="closeResolveAcc()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRMAR -->
+  <div class="overlay" id="confirmOv">
+    <div class="confirm-modal">
+      <div class="c-icon" id="cIcon">⚠️</div>
+      <div class="c-title" id="cTitle">Confirmar</div>
+      <div class="c-msg" id="cMsg">Tem certeza?</div>
+      <div class="c-btns">
+        <button class="btn bd" onclick="doCfm()">Confirmar</button>
+        <button class="btn bo" onclick="closeCfm()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

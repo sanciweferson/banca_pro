@@ -440,6 +440,50 @@
   </div>
 
   <div class="toast" id="toast"></div>
+  <!-- CHAT DE AJUDA -->
+
+  
+ <!-- CHAT DE AJUDA -->
+<button id="helpChatToggle" class="help-chat-toggle" type="button" aria-label="Abrir ajuda">
+  ?
+</button>
+
+<div id="helpChatPanel" class="help-chat-panel" aria-hidden="true">
+  <div class="help-chat-header">
+    <div>
+      <strong>Ajuda BancaPRO</strong>
+      <span id="helpChatContextLabel">assistente do sistema</span>
+    </div>
+
+    <div class="help-chat-actions">
+      <button id="helpOpenGuide" class="help-chat-mini-btn" type="button">
+        Guia
+      </button>
+      <button id="helpClearChat" class="help-chat-mini-btn" type="button">
+        Limpar
+      </button>
+      <button id="helpChatClose" class="help-chat-close" type="button" aria-label="Fechar ajuda">
+        ×
+      </button>
+    </div>
+  </div>
+
+  <div id="helpChatMessages" class="help-chat-messages"></div>
+
+  <div id="helpChatSuggestions" class="help-chat-suggestions"></div>
+
+  <form id="helpChatForm" class="help-chat-form">
+    <input
+      id="helpChatInput"
+      class="help-chat-input"
+      type="text"
+      placeholder="Digite sua dúvida..."
+      autocomplete="off"
+    />
+    <button class="help-chat-send" type="submit">Enviar</button>
+  </form>
+</div>
+<script src="chat.js"></script>
 
   <script src="app.js"></script>
 </body>
